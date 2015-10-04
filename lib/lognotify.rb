@@ -12,7 +12,7 @@ class LogNotify
     @sps = sps_address ? SPSPub.new(address: sps_address, port: sps_port) : nil
     @sps_topic = sps_topic
 
-    @command = 'tail -n 1 -f ' + logfile
+    @command = 'tail -n 1 -F ' + logfile
 
   end
   
@@ -39,6 +39,26 @@ class LogNotify
     end
 
   end  
+  
+  def watch()
+
+    return unless block_given?    
+    
+    t = Time.now # using the time we can ignore existing entries
+
+    IO.popen(@command).each_line do |x| 
+      
+      # anything after 5 seconds from start is new
+      if Time.now > t + 5 then 
+        
+        raw_log_entry = x.lines.last
+        
+        #@sps.notice(@sps_topic + ': ' + json) if @sps
+        yield raw_log_entry
+      end
+    end
+
+  end
 
 end
 
