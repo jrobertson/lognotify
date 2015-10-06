@@ -19,7 +19,7 @@ In an effort to pay more attention to log files I wrote the lognotify gem to mak
 
     ln.start
 
-In the above example the lognotify gem monitors the updates to the file */tmp/mail.info* and prints out the most recent log entry. It checks if James as logged into the mail server and if he has it prints out the following message:
+In the above example the lognotify gem monitors the updates to the file */tmp/mail.info* and prints out the most recent log entry. It checks if James has logged into the mail server and if he has it prints out the following message:
 
 <pre>James logged into the mail server</pre>
 
